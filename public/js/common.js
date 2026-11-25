@@ -6,7 +6,21 @@ const M = (() => {
     set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} },
   };
 
+  // Vitrine estática (GitHub Pages): sem servidor, os dados vêm de arquivos JSON gerados no build
+  const STATIC = !!window.MUSSATO_STATIC;
+  if (STATIC) document.documentElement.classList.add('static');
+  async function staticApi(path, method) {
+    const files = { '/api/settings': 'data/settings.json', '/api/vehicles': 'data/vehicles.json' };
+    if (method === 'GET' && files[path]) {
+      const res = await fetch(files[path]);
+      if (!res.ok) throw new Error('Não foi possível carregar os dados');
+      return res.json();
+    }
+    const err = new Error('Indisponível na vitrine'); err.status = 501; throw err;
+  }
+
   async function api(path, { method = 'GET', body, role } = {}) {
+    if (STATIC) return staticApi(path, method);
     const headers = { 'Content-Type': 'application/json' };
     const roles = role ? [role] : ['customer'];
     for (const r of roles) { const t = store.get(TOKEN_KEY[r]); if (t) headers.Authorization = 'Bearer ' + t; }
@@ -120,5 +134,5 @@ const M = (() => {
 
   const formData = (form) => Object.fromEntries(new FormData(form).entries());
 
-  return { api, store, TOKEN_KEY, esc, brl, km, date, $, $$, carSVG, vehicleVisual, vTitle, priceLabel, STATUS_LABEL, waLink, installment, toast, formData, colorOf };
+  return { STATIC, api, store, TOKEN_KEY, esc, brl, km, date, $, $$, carSVG, vehicleVisual, vTitle, priceLabel, STATUS_LABEL, waLink, installment, toast, formData, colorOf };
 })();

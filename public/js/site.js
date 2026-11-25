@@ -58,7 +58,7 @@
     $('#ct-addr').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
     $('#ct-hours').textContent = s.hours;
     $('#ct-sellers').innerHTML = (s.sellers || []).map((x) => `<a href="${waLink({ whatsapp: '55' + x.phone.replace(/\D/g, '') })}" target="_blank" rel="noopener">
-      <svg class="ico" style="color:#1fae54;width:26px;height:26px"><use href="/assets/icons.svg#i-wa"/></svg><div><small>Vendedor</small><strong>${esc(x.name)}</strong><small>${esc(x.phone)}</small></div></a>`).join('');
+      <svg class="ico" style="color:#1fae54;width:26px;height:26px"><use href="assets/icons.svg#i-wa"/></svg><div><small>Vendedor</small><strong>${esc(x.name)}</strong><small>${esc(x.phone)}</small></div></a>`).join('');
     $('#map').innerHTML = s.mapQuery || /\d/.test(s.address || '') && !/informe/i.test(s.address)
       ? `<iframe title="Mapa da loja" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed"></iframe>`
       : `<div class="empty" style="border:0">O mapa aparece aqui assim que o endereço for cadastrado no painel do lojista.</div>`;
@@ -121,7 +121,7 @@
       : v.featured ? '<span class="badge">Destaque</span>' : '';
     return `<article class="car-card" data-id="${v.id}" tabindex="0" aria-label="${esc(vTitle(v))}">
       <div class="car-photo">${badge}
-        <button class="fav-btn ${fav ? 'on' : ''}" data-fav="${v.id}" aria-label="Favoritar"><svg class="ico"><use href="/assets/icons.svg#i-heart"/></svg></button>
+        <button class="fav-btn ${fav ? 'on' : ''}" data-fav="${v.id}" aria-label="Favoritar"><svg class="ico"><use href="assets/icons.svg#i-heart"/></svg></button>
         ${vehicleVisual(v)}
       </div>
       <div class="car-body">
@@ -141,7 +141,7 @@
     $('#result-count').textContent = `${list.length} veículo${list.length === 1 ? '' : 's'} encontrado${list.length === 1 ? '' : 's'}`;
     const labels = { q: 'Busca', brand: 'Marca', category: 'Categoria', transmission: 'Câmbio', max: 'Até' };
     $('#chips').innerHTML = Object.keys(labels).filter((k) => state[k]).map((k) =>
-      `<button class="chip" data-clear="${k}" type="button">${labels[k]}: ${esc(k === 'max' ? brl(state[k]) : state[k])} <svg class="ico" style="width:14px"><use href="/assets/icons.svg#i-x"/></svg></button>`).join('');
+      `<button class="chip" data-clear="${k}" type="button">${labels[k]}: ${esc(k === 'max' ? brl(state[k]) : state[k])} <svg class="ico" style="width:14px"><use href="assets/icons.svg#i-x"/></svg></button>`).join('');
   }
   function syncFilterForm() {
     const f = $('#filters');
@@ -207,7 +207,7 @@
     const msg = `Olá! Tenho interesse no ${vTitle(v)} ${v.version} ${v.year}${v.price > 0 ? ` anunciado por ${brl(v.price)}` : ''} no site. Pode me passar mais informações?`;
     const photos = v.photos?.length ? v.photos : [null];
     $('#modal-box').innerHTML = `
-      <button class="round-btn modal-close" data-close aria-label="Fechar"><svg class="ico"><use href="/assets/icons.svg#i-x"/></svg></button>
+      <button class="round-btn modal-close" data-close aria-label="Fechar"><svg class="ico"><use href="assets/icons.svg#i-x"/></svg></button>
       <div class="detail">
         <div>
           <div class="car-photo gallery-main" id="g-main">${vehicleVisual(v)}</div>
@@ -227,8 +227,8 @@
             <div><small>${v.category === 'Moto' ? 'Tipo' : 'Portas'}</small><strong>${v.category === 'Moto' ? 'Moto' : esc(v.doors)}</strong></div>
           </div>
           <div class="detail-actions">
-            <a class="btn btn-wa" href="${waLink(settings, msg)}" target="_blank" rel="noopener"><svg class="ico"><use href="/assets/icons.svg#i-wa"/></svg>Tenho interesse</a>
-            <button class="btn btn-ghost" data-fav-modal="${v.id}"><svg class="ico" ${fav ? 'style="fill:var(--red-2)"' : ''}><use href="/assets/icons.svg#i-heart"/></svg>${fav ? 'Favorito' : 'Favoritar'}</button>
+            <a class="btn btn-wa" href="${waLink(settings, msg)}" target="_blank" rel="noopener"><svg class="ico"><use href="assets/icons.svg#i-wa"/></svg>Tenho interesse</a>
+            <button class="btn btn-ghost" data-fav-modal="${v.id}"><svg class="ico" ${fav ? 'style="fill:var(--red-2)"' : ''}><use href="assets/icons.svg#i-heart"/></svg>${fav ? 'Favorito' : 'Favoritar'}</button>
           </div>
         </div>
       </div>
@@ -243,7 +243,7 @@
           </div>` : `<div class="card" style="margin-top:18px;padding:20px">
             <h3 style="font-size:1.05rem">Financiamento facilitado</h3>
             <p style="color:var(--muted);margin:0 0 12px">Financiamento com excelentes condições e entrada parcelada em até 12x no cartão. Fale com um de nossos vendedores:</p>
-            <div style="display:grid;gap:8px">${(settings.sellers || []).map((s) => `<a class="btn btn-wa btn-sm" href="${waLink({ whatsapp: '55' + s.phone.replace(/\D/g, '') }, msg)}" target="_blank" rel="noopener"><svg class="ico"><use href="/assets/icons.svg#i-wa"/></svg>${esc(s.name)} • ${esc(s.phone)}</a>`).join('')}</div>
+            <div style="display:grid;gap:8px">${(settings.sellers || []).map((s) => `<a class="btn btn-wa btn-sm" href="${waLink({ whatsapp: '55' + s.phone.replace(/\D/g, '') }, msg)}" target="_blank" rel="noopener"><svg class="ico"><use href="assets/icons.svg#i-wa"/></svg>${esc(s.name)} • ${esc(s.phone)}</a>`).join('')}</div>
           </div>`}
         </div>
         <div class="card" style="padding:22px">
@@ -277,8 +277,15 @@
   $('#modal').addEventListener('click', (e) => { if (e.target.id === 'modal' || e.target.closest('[data-close]')) closeModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && $('#modal').classList.contains('open')) closeModal(); });
 
-  /* ================= FAVORITOS (cliente logado) ================= */
+  /* ================= FAVORITOS (cliente logado; na vitrine, salvos no navegador) ================= */
+  const FAV_KEY = 'mussato_favs';
   async function toggleFav(id, reopen) {
+    if (M.STATIC) {
+      const favs = me.favorites.includes(id) ? me.favorites.filter((f) => f !== id) : [...me.favorites, id];
+      me.favorites = favs; store.set(FAV_KEY, JSON.stringify(favs));
+      toast(favs.includes(id) ? 'Salvo nos favoritos deste navegador' : 'Removido dos favoritos');
+      renderGrid(); if (reopen) openVehicle(id); return;
+    }
     if (!me) { toast('Entre ou cadastre-se para salvar favoritos', 'err'); setTimeout(() => (location.href = '/cliente?fav=' + id), 900); return; }
     try {
       me = await api('/api/me/favorites', { method: 'POST', body: { vehicleId: id } });
@@ -295,6 +302,13 @@
     const type = form.dataset.msg;
     let message = d.message || '';
     if (type === 'venda') message = `Veículo: ${d.car} | Ano/km: ${d.yearkm || '-'}\n${message}`;
+    if (M.STATIC) { // vitrine: sem servidor, a mensagem vai pelo WhatsApp da loja
+      const head = { venda: 'Quero vender/trocar meu veículo', duvida: 'Tenho uma dúvida', interesse: `Interesse: ${form.dataset.label || ''}`, contato: 'Contato pelo site' }[type] || 'Contato pelo site';
+      const text = [`*${head}*`, `Nome: ${d.name}`, d.phone && `WhatsApp: ${d.phone}`, d.email && `E-mail: ${d.email}`, '', message].filter((x) => x !== undefined && x !== false && x !== '').join('\n');
+      window.open(waLink(settings, text), '_blank', 'noopener');
+      if (type !== 'interesse') form.reset();
+      return;
+    }
     const btn = form.querySelector('[type=submit]'); btn.disabled = true;
     try {
       await api('/api/messages', { method: 'POST', body: { type, name: d.name, phone: d.phone, email: d.email, message, vehicleId: form.dataset.vehicle, vehicleLabel: form.dataset.label } });
@@ -339,7 +353,10 @@
     } catch (err) {
       toast('Não foi possível carregar o estoque. Tente novamente.', 'err'); return;
     }
-    if (store.get(TOKEN_KEY.customer)) {
+    if (M.STATIC) {
+      let favs = []; try { favs = JSON.parse(store.get(FAV_KEY) || '[]'); } catch {}
+      me = { name: '', phone: '', email: '', favorites: Array.isArray(favs) ? favs : [] };
+    } else if (store.get(TOKEN_KEY.customer)) {
       try { me = await api('/api/me'); $('#client-link span').textContent = 'Olá, ' + me.name.split(' ')[0]; }
       catch { store.set(TOKEN_KEY.customer, null); }
     }

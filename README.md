@@ -39,7 +39,23 @@ O `data/db.json` **não vai para o Git** (tem o segredo de sessão, a senha do p
 Na primeira execução sem ele, o servidor cria um novo a partir de `data/seed.json` (dados da loja + estoque)
 com a senha inicial `mussato2026` — troque-a no primeiro acesso.
 
-## Publicar na internet
+## Vitrine no ar (GitHub Pages)
+
+**https://infinity-360.github.io/mussato-veiculos/**
+
+A cada push na branch `main`, o GitHub gera e publica automaticamente uma **vitrine estática** do site
+(`npm run build:static`): estoque, busca por marca, fotos, simulador, dúvidas, contato e mapa.
+Como o GitHub Pages não roda servidor, na vitrine **não há painel do lojista nem área do cliente**;
+os formulários abrem o WhatsApp da loja com a mensagem pronta e os favoritos ficam salvos no navegador.
+
+**Para atualizar o estoque da vitrine:**
+1. Rode `node server.js` e edite os veículos no painel (`http://localhost:3000/admin`).
+2. Rode `npm run export-seed` (copia estoque e dados da loja para `data/seed.json`, sem senhas nem clientes).
+3. Faça commit e push (pelo GitHub Desktop, por exemplo) — em 1–2 minutos o site no ar é atualizado.
+
+Para ver a vitrine localmente antes: `npm run build:static` e `node scripts/serve-static.js`.
+
+## Publicar o site completo na internet
 
 Qualquer hospedagem que rode Node.js serve (VPS, Render, Railway etc.). Use HTTPS e mantenha a pasta `data/`
 em disco persistente. A porta pode ser definida pela variável `PORT`.

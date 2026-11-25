@@ -80,10 +80,10 @@ function renderVehicles() {
         <div class="price" style="font-size:1.2rem;margin-top:4px">${M.priceLabel(v)}</div></div>
       <select class="status-sel" data-status aria-label="Status">${Object.entries(STATUS_LABEL).map(([k, l]) => `<option value="${k}" ${v.status === k ? 'selected' : ''}>${l}</option>`).join('')}</select>
       <div class="actions">
-        <button class="icon-btn ${v.featured ? 'on' : ''}" data-feat title="Destaque"><svg class="ico"><use href="/assets/icons.svg#i-star"/></svg></button>
-        <a class="icon-btn" href="/?v=${v.id}" target="_blank" title="Ver no site"><svg class="ico"><use href="/assets/icons.svg#i-search"/></svg></a>
-        <button class="icon-btn" data-edit title="Editar"><svg class="ico"><use href="/assets/icons.svg#i-edit"/></svg></button>
-        <button class="icon-btn" data-del title="Excluir"><svg class="ico"><use href="/assets/icons.svg#i-trash"/></svg></button>
+        <button class="icon-btn ${v.featured ? 'on' : ''}" data-feat title="Destaque"><svg class="ico"><use href="assets/icons.svg#i-star"/></svg></button>
+        <a class="icon-btn" href="/?v=${v.id}" target="_blank" title="Ver no site"><svg class="ico"><use href="assets/icons.svg#i-search"/></svg></a>
+        <button class="icon-btn" data-edit title="Editar"><svg class="ico"><use href="assets/icons.svg#i-edit"/></svg></button>
+        <button class="icon-btn" data-del title="Excluir"><svg class="ico"><use href="assets/icons.svg#i-trash"/></svg></button>
       </div>
     </div>`).join('') || '<div class="empty">Nenhum veículo encontrado.</div>';
 }
@@ -170,8 +170,8 @@ function renderPhotos() {
     <div class="ph" data-i="${i}">${i === 0 ? '<span class="cover">Capa</span>' : ''}
       <div class="car-photo">${vehicleVisual({ ...fake, photos: [p] })}</div>
       <div class="ph-bar">
-        <span style="display:flex;gap:4px"><button type="button" data-mv="-1" aria-label="Mover para esquerda"><svg class="ico"><use href="/assets/icons.svg#i-left"/></svg></button><button type="button" data-mv="1" aria-label="Mover para direita"><svg class="ico"><use href="/assets/icons.svg#i-right"/></svg></button></span>
-        <button type="button" data-rm aria-label="Remover foto"><svg class="ico"><use href="/assets/icons.svg#i-trash"/></svg></button>
+        <span style="display:flex;gap:4px"><button type="button" data-mv="-1" aria-label="Mover para esquerda"><svg class="ico"><use href="assets/icons.svg#i-left"/></svg></button><button type="button" data-mv="1" aria-label="Mover para direita"><svg class="ico"><use href="assets/icons.svg#i-right"/></svg></button></span>
+        <button type="button" data-rm aria-label="Remover foto"><svg class="ico"><use href="assets/icons.svg#i-trash"/></svg></button>
       </div>
     </div>`).join('') + Array.from({ length: pending }, (_, k) => `<div class="ph processing" id="proc-${k}"><div>Processando foto…<div class="bar"><i></i></div></div></div>`).join('');
 }
@@ -347,7 +347,7 @@ $('#c-export').onclick = () => {
 /* ================= CONFIGURAÇÕES ================= */
 function faqItem(f = { q: '', a: '' }) {
   return `<div class="item"><div class="stack"><input class="field" data-q placeholder="Pergunta" value="${esc(f.q)}"><textarea class="field" data-a placeholder="Resposta" style="min-height:60px">${esc(f.a)}</textarea></div>
-    <button type="button" class="icon-btn" data-faq-rm aria-label="Remover"><svg class="ico"><use href="/assets/icons.svg#i-trash"/></svg></button></div>`;
+    <button type="button" class="icon-btn" data-faq-rm aria-label="Remover"><svg class="ico"><use href="assets/icons.svg#i-trash"/></svg></button></div>`;
 }
 function renderSettings() {
   const f = $('#settings-form');

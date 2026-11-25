@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node test/smoke.js"
+    "test": "node test/smoke.js",
+    "build:static": "node scripts/build-static.js",
+    "export-seed": "node scripts/export-seed.js"
   },
   "engines": {
     "node": ">=22"

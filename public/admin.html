@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700&family=Kaushan+Script&family=Russo+One&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
 
@@ -33,21 +33,21 @@
   <aside class="adm-side" id="side">
     <a href="/" class="logo" target="_blank"><span class="logo-main">MUSSATO</span><span class="logo-sub">Veículos</span></a>
     <div class="side-label">Gestão da loja</div>
-    <button data-tab="dash" class="active"><svg class="ico"><use href="/assets/icons.svg#i-home"/></svg>Painel</button>
-    <button data-tab="vehicles"><svg class="ico"><use href="/assets/icons.svg#i-car"/></svg>Veículos</button>
-    <button data-tab="messages"><svg class="ico"><use href="/assets/icons.svg#i-chat"/></svg>Mensagens<span class="count" id="msg-count" hidden></span></button>
-    <button data-tab="customers"><svg class="ico"><use href="/assets/icons.svg#i-user"/></svg>Clientes</button>
-    <button data-tab="settings"><svg class="ico"><use href="/assets/icons.svg#i-gear"/></svg>Dados da loja</button>
+    <button data-tab="dash" class="active"><svg class="ico"><use href="assets/icons.svg#i-home"/></svg>Painel</button>
+    <button data-tab="vehicles"><svg class="ico"><use href="assets/icons.svg#i-car"/></svg>Veículos</button>
+    <button data-tab="messages"><svg class="ico"><use href="assets/icons.svg#i-chat"/></svg>Mensagens<span class="count" id="msg-count" hidden></span></button>
+    <button data-tab="customers"><svg class="ico"><use href="assets/icons.svg#i-user"/></svg>Clientes</button>
+    <button data-tab="settings"><svg class="ico"><use href="assets/icons.svg#i-gear"/></svg>Dados da loja</button>
     <div class="bottom">
-      <a class="side-link" href="/" target="_blank"><svg class="ico"><use href="/assets/icons.svg#i-right"/></svg>Ver site</a>
-      <button id="logout"><svg class="ico"><use href="/assets/icons.svg#i-logout"/></svg>Sair</button>
+      <a class="side-link" href="/" target="_blank"><svg class="ico"><use href="assets/icons.svg#i-right"/></svg>Ver site</a>
+      <button id="logout"><svg class="ico"><use href="assets/icons.svg#i-logout"/></svg>Sair</button>
     </div>
   </aside>
 
   <main class="adm-main">
     <div class="adm-top">
       <div style="display:flex;gap:12px;align-items:center">
-        <button class="round-btn adm-burger" id="adm-burger" aria-label="Menu"><svg class="ico"><use href="/assets/icons.svg#i-right"/></svg></button>
+        <button class="round-btn adm-burger" id="adm-burger" aria-label="Menu"><svg class="ico"><use href="assets/icons.svg#i-right"/></svg></button>
         <h1 id="page-title">Painel</h1>
       </div>
       <button class="btn btn-red" id="new-vehicle">+ Novo veículo</button>
@@ -143,7 +143,7 @@
 <!-- Editor de veículo -->
 <div class="modal" id="editor" role="dialog" aria-modal="true" aria-labelledby="ed-title">
   <div class="modal-box editor">
-    <button class="round-btn modal-close" data-close aria-label="Fechar"><svg class="ico"><use href="/assets/icons.svg#i-x"/></svg></button>
+    <button class="round-btn modal-close" data-close aria-label="Fechar"><svg class="ico"><use href="assets/icons.svg#i-x"/></svg></button>
     <h2 id="ed-title">Novo veículo</h2>
     <form id="vform" class="stack">
       <div class="form-3">
@@ -167,7 +167,7 @@
       <div>
         <label class="lbl">Fotos</label>
         <div class="drop" id="drop" tabindex="0" role="button" aria-label="Enviar fotos">
-          <svg class="ico" style="width:34px;height:34px;color:var(--red-2)"><use href="/assets/icons.svg#i-upload"/></svg>
+          <svg class="ico" style="width:34px;height:34px;color:var(--red-2)"><use href="assets/icons.svg#i-upload"/></svg>
           <div><b>Clique ou arraste as fotos aqui</b><br><small style="color:var(--muted)">JPG, PNG ou WEBP — pode enviar várias de uma vez</small></div>
           <div class="drop-opts" onclick="event.stopPropagation()">
             <label><input type="checkbox" id="opt-bg" checked> Remover fundo (IA)</label>
@@ -186,7 +186,7 @@
   </div>
 </div>
 
-<script src="/js/common.js"></script>
-<script type="module" src="/js/admin.js"></script>
+<script src="js/common.js"></script>
+<script type="module" src="js/admin.js"></script>
 </body>
 </html>

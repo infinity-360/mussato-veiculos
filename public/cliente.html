@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700&family=Kaushan+Script&family=Russo+One&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <header class="site-header">
@@ -16,7 +16,7 @@
     <a href="/" class="logo" aria-label="Mussato Veículos — início"><span class="logo-main">MUSSATO</span><span class="logo-sub">Veículos</span></a>
     <div class="nav-actions" style="margin-left:auto">
       <a class="btn btn-ghost btn-sm" href="/#estoque" style="display:inline-flex">Ver estoque</a>
-      <button class="btn btn-ghost btn-sm" id="logout" hidden style="display:inline-flex"><svg class="ico"><use href="/assets/icons.svg#i-logout"/></svg>Sair</button>
+      <button class="btn btn-ghost btn-sm" id="logout" hidden style="display:inline-flex"><svg class="ico"><use href="assets/icons.svg#i-logout"/></svg>Sair</button>
     </div>
   </div>
 </header>
@@ -61,15 +61,15 @@
         <button class="btn btn-ghost btn-sm" type="submit">Salvar dados</button>
       </form>
     </div>
-    <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener"><svg class="ico"><use href="/assets/icons.svg#i-wa"/></svg>Falar com um vendedor</a>
+    <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener"><svg class="ico"><use href="assets/icons.svg#i-wa"/></svg>Falar com um vendedor</a>
   </aside>
   <div class="stack" style="gap:24px;align-content:start">
     <section class="card">
-      <h3><svg class="ico" style="color:var(--red-2);vertical-align:-3px"><use href="/assets/icons.svg#i-heart"/></svg> Meus favoritos</h3>
+      <h3><svg class="ico" style="color:var(--red-2);vertical-align:-3px"><use href="assets/icons.svg#i-heart"/></svg> Meus favoritos</h3>
       <div class="grid-cars" id="favs"></div>
     </section>
     <section class="card">
-      <h3><svg class="ico" style="color:var(--red-2);vertical-align:-3px"><use href="/assets/icons.svg#i-chat"/></svg> Minhas dúvidas e mensagens</h3>
+      <h3><svg class="ico" style="color:var(--red-2);vertical-align:-3px"><use href="assets/icons.svg#i-chat"/></svg> Minhas dúvidas e mensagens</h3>
       <form class="stack" id="ask-form" style="margin-bottom:18px">
         <textarea class="field" name="message" placeholder="Escreva sua dúvida para a loja (ex: aceitam moto na troca?)" required></textarea>
         <button class="btn btn-red" type="submit" style="justify-self:start">Enviar dúvida</button>
@@ -79,7 +79,7 @@
   </div>
 </main>
 
-<script src="/js/common.js"></script>
+<script src="js/common.js"></script>
 <script>
 (() => {
   const { $, $$, esc, brl, km, api, store, TOKEN_KEY, vehicleVisual, vTitle, toast, formData, waLink, date } = M;

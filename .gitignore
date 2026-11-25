@@ -3,6 +3,7 @@ data/db.json
 data/db.json.tmp
 
 node_modules/
+_site/
 .claude/
 .env
 *.log
