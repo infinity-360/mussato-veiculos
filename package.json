@@ -4,7 +4,8 @@
   "description": "Site da Mussato Veículos — estoque, painel do lojista e área do cliente",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node test/smoke.js"
   },
   "engines": {
     "node": ">=18"
