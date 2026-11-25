@@ -1,0 +1,10 @@
+# Banco de dados local (contém o segredo de sessão, senha do painel e dados de clientes)
+data/db.json
+data/db.json.tmp
+
+node_modules/
+.claude/
+.env
+*.log
+.DS_Store
+Thumbs.db

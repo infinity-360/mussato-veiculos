@@ -1,0 +1,77 @@
+/* ===== Painel do lojista ===== */
+.adm { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+.adm-side { position: sticky; top: 0; height: 100vh; background: #050a14; border-right: 1px solid var(--line); padding: 22px 14px; display: flex; flex-direction: column; gap: 6px; }
+.adm-side .logo { margin: 0 8px 22px; }
+.adm-side .side-label { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 10px 10px; }
+.adm-side button, .adm-side a.side-link {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 12px; border-radius: 12px; border: 0; background: none;
+  cursor: pointer; text-align: left; font-family: var(--font-head); font-weight: 700; color: #cdd3de; text-decoration: none; font-size: .95rem;
+}
+.adm-side button:hover, .adm-side a.side-link:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+.adm-side button.active { background: linear-gradient(90deg, rgba(227, 20, 28, .9), rgba(227, 20, 28, .55)); color: #fff; }
+.adm-side .count { margin-left: auto; background: var(--red); border-radius: 999px; font-size: .72rem; padding: 1px 8px; }
+.adm-side button.active .count { background: #fff; color: var(--red); }
+.adm-side .bottom { margin-top: auto; display: grid; gap: 4px; }
+.adm-main { padding: 28px clamp(16px, 3vw, 40px) 60px; min-width: 0; background: radial-gradient(ellipse at 100% 0%, rgba(30, 60, 130, .25), transparent 50%); }
+.adm-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.adm-top h1 { font-style: italic; text-transform: uppercase; font-size: 1.8rem; margin: 0; }
+.adm-burger { display: none; }
+@media (max-width: 900px) {
+  .adm { grid-template-columns: 1fr; }
+  .adm-side { position: fixed; z-index: 80; width: 270px; transform: translateX(-100%); transition: transform .25s; }
+  .adm-side.open { transform: none; box-shadow: var(--shadow); }
+  .adm-burger { display: grid; }
+}
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 26px; }
+.kpi { border-radius: 16px; padding: 18px; background: linear-gradient(160deg, #13223f, #0b1529); border: 1px solid var(--line); }
+.kpi small { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+.kpi strong { display: block; font-family: var(--font-head); font-size: 1.9rem; font-style: italic; font-weight: 900; margin-top: 4px; }
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.toolbar .field { width: auto; flex: 1; min-width: 160px; }
+.vlist { display: grid; gap: 10px; }
+.vrow { display: grid; grid-template-columns: 120px 1fr auto auto; gap: 16px; align-items: center; padding: 10px; border-radius: 16px; background: rgba(255, 255, 255, .03); border: 1px solid var(--line); }
+.vrow .car-photo { border-radius: 10px; aspect-ratio: 16 / 10; }
+.vrow h4 { margin: 0; font-size: 1.05rem; }
+.vrow .sub { color: var(--muted); font-size: .85rem; }
+.vrow .actions { display: flex; gap: 6px; align-items: center; }
+.icon-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255, 255, 255, .04); display: grid; place-items: center; cursor: pointer; color: #dfe4ee; }
+.icon-btn:hover { border-color: var(--red); color: #fff; }
+.icon-btn.on { color: #ffc531; border-color: #ffc531; }
+.status-sel { padding: 8px 10px; border-radius: 10px; background: #0c1a33; border: 1px solid var(--line); }
+.demo-tag { font-size: .68rem; background: rgba(245, 165, 36, .2); color: #ffc65c; padding: 2px 7px; border-radius: 6px; margin-left: 6px; vertical-align: middle; }
+@media (max-width: 720px) {
+  .vrow { grid-template-columns: 90px 1fr; }
+  .vrow .status-sel, .vrow .actions { grid-column: 1 / -1; }
+}
+/* Editor */
+.editor { padding: 26px; }
+.editor h2 { font-style: italic; text-transform: uppercase; }
+.form-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.form-3 .span2 { grid-column: span 2; } .form-3 .full { grid-column: 1 / -1; }
+@media (max-width: 720px) { .form-3 { grid-template-columns: 1fr 1fr; } }
+.drop { border: 2px dashed rgba(255, 255, 255, .2); border-radius: 16px; padding: 22px; text-align: center; cursor: pointer; transition: .15s; background: rgba(255, 255, 255, .02); }
+.drop.over, .drop:hover { border-color: var(--red); background: rgba(227, 20, 28, .07); }
+.drop-opts { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-top: 12px; font-size: .9rem; }
+.drop-opts label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.drop-opts input { accent-color: var(--red); width: 17px; height: 17px; }
+.photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 14px; }
+.ph { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.ph .car-photo { aspect-ratio: 16 / 10; }
+.ph .ph-bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; display: flex; justify-content: space-between; padding: 4px; background: linear-gradient(transparent, rgba(0, 0, 0, .8)); }
+.ph .ph-bar button { background: rgba(0, 0, 0, .5); border: 0; border-radius: 8px; width: 28px; height: 28px; cursor: pointer; display: grid; place-items: center; }
+.ph .ph-bar button:hover { background: var(--red); }
+.ph .cover { position: absolute; top: 6px; left: 6px; z-index: 3; font-size: .65rem; font-weight: 800; background: var(--red); padding: 2px 7px; border-radius: 6px; text-transform: uppercase; }
+.ph.processing { display: grid; place-items: center; aspect-ratio: 16 / 10; background: #0c1527; font-size: .82rem; color: var(--muted); text-align: center; padding: 10px; }
+.bar { height: 6px; border-radius: 6px; background: rgba(255, 255, 255, .1); overflow: hidden; width: 80%; margin: 8px auto 0; }
+.bar i { display: block; height: 100%; width: 0; background: var(--red); transition: width .2s; }
+.check-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.check-row label { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+.check-row input { accent-color: var(--red); width: 18px; height: 18px; }
+.table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.table th, .table td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--line); }
+.table th { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
+.table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: rgba(255, 255, 255, .02); }
+.faq-edit { display: grid; gap: 10px; }
+.faq-edit .item { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 12px; border-radius: 12px; border: 1px solid var(--line); }
+.faq-edit .item .stack { gap: 8px; }
+.banner { padding: 14px 16px; border-radius: 14px; background: rgba(245, 165, 36, .12); border: 1px solid rgba(245, 165, 36, .45); margin-bottom: 20px; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }

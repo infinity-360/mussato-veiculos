@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Área do Cliente — Mussato Veículos</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23e3141c'/%3E%3Ctext x='32' y='43' font-family='Arial Black' font-size='30' font-style='italic' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700&family=Kaushan+Script&family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a href="/" class="logo" aria-label="Mussato Veículos — início"><span class="logo-main">MUSSATO</span><span class="logo-sub">Veículos</span></a>
+    <div class="nav-actions" style="margin-left:auto">
+      <a class="btn btn-ghost btn-sm" href="/#estoque" style="display:inline-flex">Ver estoque</a>
+      <button class="btn btn-ghost btn-sm" id="logout" hidden style="display:inline-flex"><svg class="ico"><use href="/assets/icons.svg#i-logout"/></svg>Sair</button>
+    </div>
+  </div>
+</header>
+
+<!-- Entrar / cadastrar -->
+<section class="auth-wrap" id="auth" hidden>
+  <div class="card auth-card">
+    <h2 style="font-style:italic;text-transform:uppercase;text-align:center">Área do cliente</h2>
+    <p style="text-align:center;color:var(--muted);margin-top:-4px">Salve seus carros favoritos, tire dúvidas e acompanhe as respostas da loja.</p>
+    <div class="tabs" role="tablist">
+      <button class="active" data-t="login" role="tab">Entrar</button>
+      <button data-t="register" role="tab">Criar conta</button>
+    </div>
+    <form class="stack" id="login-form">
+      <input class="field" name="email" type="email" placeholder="E-mail" required autocomplete="email">
+      <input class="field" name="password" type="password" placeholder="Senha" required autocomplete="current-password">
+      <button class="btn btn-red" type="submit">Entrar</button>
+    </form>
+    <form class="stack" id="register-form" hidden>
+      <input class="field" name="name" placeholder="Nome completo" required autocomplete="name">
+      <input class="field" name="email" type="email" placeholder="E-mail" required autocomplete="email">
+      <input class="field" name="phone" placeholder="WhatsApp" autocomplete="tel" inputmode="tel">
+      <input class="field" name="city" placeholder="Cidade" autocomplete="address-level2">
+      <input class="field" name="password" type="password" placeholder="Crie uma senha (mín. 6 caracteres)" required minlength="6" autocomplete="new-password">
+      <label style="display:flex;gap:8px;font-size:.85rem;color:var(--muted);align-items:flex-start"><input type="checkbox" required style="accent-color:var(--red);margin-top:3px"> Autorizo a Mussato Veículos a entrar em contato comigo sobre veículos e ofertas.</label>
+      <button class="btn btn-red" type="submit">Criar minha conta</button>
+    </form>
+  </div>
+</section>
+
+<!-- Painel do cliente -->
+<main class="container dash" id="dash" hidden>
+  <aside class="stack" style="align-content:start">
+    <div class="card">
+      <div class="kicker">Minha conta</div>
+      <h2 style="font-style:italic;text-transform:uppercase;font-size:1.5rem;margin-top:6px" id="hello"></h2>
+      <form class="stack" id="profile-form">
+        <div><label class="lbl">Nome</label><input class="field" name="name"></div>
+        <div><label class="lbl">WhatsApp</label><input class="field" name="phone" inputmode="tel"></div>
+        <div><label class="lbl">Cidade</label><input class="field" name="city"></div>
+        <div><label class="lbl">E-mail</label><input class="field" name="email" disabled></div>
+        <button class="btn btn-ghost btn-sm" type="submit">Salvar dados</button>
+      </form>
+    </div>
+    <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener"><svg class="ico"><use href="/assets/icons.svg#i-wa"/></svg>Falar com um vendedor</a>
+  </aside>
+  <div class="stack" style="gap:24px;align-content:start">
+    <section class="card">
+      <h3><svg class="ico" style="color:var(--red-2);vertical-align:-3px"><use href="/assets/icons.svg#i-heart"/></svg> Meus favoritos</h3>
+      <div class="grid-cars" id="favs"></div>
+    </section>
+    <section class="card">
+      <h3><svg class="ico" style="color:var(--red-2);vertical-align:-3px"><use href="/assets/icons.svg#i-chat"/></svg> Minhas dúvidas e mensagens</h3>
+      <form class="stack" id="ask-form" style="margin-bottom:18px">
+        <textarea class="field" name="message" placeholder="Escreva sua dúvida para a loja (ex: aceitam moto na troca?)" required></textarea>
+        <button class="btn btn-red" type="submit" style="justify-self:start">Enviar dúvida</button>
+      </form>
+      <div id="my-msgs"></div>
+    </section>
+  </div>
+</main>
+
+<script src="/js/common.js"></script>
+<script>
+(() => {
+  const { $, $$, esc, brl, km, api, store, TOKEN_KEY, vehicleVisual, vTitle, toast, formData, waLink, date } = M;
+  let me = null, vehicles = [], settings = {};
+  const params = new URLSearchParams(location.search);
+
+  $$('.tabs button').forEach((b) => b.onclick = () => {
+    $$('.tabs button').forEach((x) => x.classList.toggle('active', x === b));
+    $('#login-form').hidden = b.dataset.t !== 'login';
+    $('#register-form').hidden = b.dataset.t !== 'register';
+  });
+
+  async function afterAuth(r) {
+    store.set(TOKEN_KEY.customer, r.token); me = r.customer;
+    const fav = params.get('fav');
+    if (fav && !me.favorites.includes(fav)) { try { me = await api('/api/me/favorites', { method: 'POST', body: { vehicleId: fav } }); toast('Veículo salvo nos favoritos!'); } catch {} }
+    showDash();
+  }
+  $('#login-form').onsubmit = async (e) => {
+    e.preventDefault();
+    try { await afterAuth(await api('/api/customers/login', { method: 'POST', body: formData(e.target) })); } catch (err) { toast(err.message, 'err'); }
+  };
+  $('#register-form').onsubmit = async (e) => {
+    e.preventDefault();
+    try { await afterAuth(await api('/api/customers/register', { method: 'POST', body: formData(e.target) })); toast('Conta criada! Bem-vindo(a) à Mussato.'); } catch (err) { toast(err.message, 'err'); }
+  };
+  $('#logout').onclick = () => { store.set(TOKEN_KEY.customer, null); me = null; showAuth(); };
+
+  function showAuth() { $('#auth').hidden = false; $('#dash').hidden = true; $('#logout').hidden = true; }
+  async function showDash() {
+    $('#auth').hidden = true; $('#dash').hidden = false; $('#logout').hidden = false;
+    $('#hello').textContent = 'Olá, ' + me.name.split(' ')[0] + '!';
+    const f = $('#profile-form');
+    for (const k of ['name', 'phone', 'city', 'email']) f.elements[k].value = me[k] || '';
+    renderFavs(); loadMsgs();
+  }
+  function renderFavs() {
+    const favs = vehicles.filter((v) => me.favorites.includes(v.id));
+    $('#favs').innerHTML = favs.map((v) => `
+      <a class="car-card" href="/?v=${v.id}" style="text-decoration:none">
+        <div class="car-photo">${v.status !== 'disponivel' ? `<span class="badge ${v.status}">${M.STATUS_LABEL[v.status]}</span>` : ''}${vehicleVisual(v)}</div>
+        <div class="car-body"><h3>${esc(vTitle(v))}<small>${esc(v.version)} • ${esc(v.year)} • ${km(v.km)}</small></h3>
+        <div class="car-foot"><div class="price">${brl(v.price)}</div><span class="btn btn-red btn-sm">Ver</span></div></div>
+      </a>`).join('') || `<div class="empty" style="grid-column:1/-1">Você ainda não salvou nenhum veículo. Toque no ♥ nos carros do <a href="/#estoque">estoque</a>.</div>`;
+  }
+  async function loadMsgs() {
+    try {
+      const list = await api('/api/me/messages');
+      $('#my-msgs').innerHTML = list.map((m) => `<div class="msg">
+        <div class="meta"><span>${m.vehicleLabel ? esc(m.vehicleLabel) : 'Mensagem'}</span><span><span class="tag ${m.status === 'em atendimento' ? 'em' : esc(m.status)}">${esc(m.status)}</span> ${date(m.createdAt)}</span></div>
+        <p style="margin:8px 0 0;white-space:pre-wrap">${esc(m.message)}</p>
+        ${m.answer ? `<div class="answer"><small style="color:var(--muted)">Resposta da Mussato:</small><div>${esc(m.answer)}</div></div>` : ''}
+      </div>`).join('') || '<p style="color:var(--muted)">Nenhuma mensagem enviada ainda.</p>';
+    } catch (err) { toast(err.message, 'err'); }
+  }
+  $('#ask-form').onsubmit = async (e) => {
+    e.preventDefault();
+    try { await api('/api/messages', { method: 'POST', body: { type: 'duvida', message: e.target.elements.message.value } }); e.target.reset(); toast('Dúvida enviada! Você verá a resposta aqui.'); loadMsgs(); }
+    catch (err) { toast(err.message, 'err'); }
+  };
+  $('#profile-form').onsubmit = async (e) => {
+    e.preventDefault();
+    const d = formData(e.target); delete d.email;
+    try { me = await api('/api/me', { method: 'PUT', body: d }); toast('Dados atualizados'); $('#hello').textContent = 'Olá, ' + me.name.split(' ')[0] + '!'; }
+    catch (err) { toast(err.message, 'err'); }
+  };
+
+  (async () => {
+    try { [settings, vehicles] = await Promise.all([api('/api/settings'), api('/api/vehicles')]); } catch {}
+    $$('[data-wa]').forEach((a) => a.href = waLink(settings));
+    if (store.get(TOKEN_KEY.customer)) {
+      try { me = await api('/api/me'); return showDash(); } catch { store.set(TOKEN_KEY.customer, null); }
+    }
+    showAuth();
+    if (params.get('fav')) toast('Entre ou crie sua conta para salvar o favorito');
+  })();
+})();
+</script>
+</body>
+</html>

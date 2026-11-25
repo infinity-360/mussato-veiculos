@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Painel do Lojista — Mussato Veículos</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23e3141c'/%3E%3Ctext x='32' y='43' font-family='Arial Black' font-size='30' font-style='italic' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700&family=Kaushan+Script&family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<!-- Login -->
+<section class="auth-wrap" id="login-view" hidden style="min-height:100vh">
+  <div class="card auth-card">
+    <div style="text-align:center;margin-bottom:18px"><span class="logo" style="align-items:center"><span class="logo-main" style="font-size:44px">MUSSATO</span><span class="logo-sub">Veículos</span></span></div>
+    <h2 style="text-align:center;font-style:italic;text-transform:uppercase;font-size:1.3rem">Área do lojista</h2>
+    <form class="stack" id="login-form">
+      <label class="lbl" for="pw">Senha de acesso</label>
+      <input class="field" type="password" id="pw" name="password" required autocomplete="current-password">
+      <button class="btn btn-red" type="submit">Entrar no painel</button>
+      <a href="/" style="text-align:center;color:var(--muted);font-size:.9rem">← Voltar ao site</a>
+    </form>
+  </div>
+</section>
+
+<!-- Painel -->
+<div class="adm" id="app-view" hidden>
+  <aside class="adm-side" id="side">
+    <a href="/" class="logo" target="_blank"><span class="logo-main">MUSSATO</span><span class="logo-sub">Veículos</span></a>
+    <div class="side-label">Gestão da loja</div>
+    <button data-tab="dash" class="active"><svg class="ico"><use href="/assets/icons.svg#i-home"/></svg>Painel</button>
+    <button data-tab="vehicles"><svg class="ico"><use href="/assets/icons.svg#i-car"/></svg>Veículos</button>
+    <button data-tab="messages"><svg class="ico"><use href="/assets/icons.svg#i-chat"/></svg>Mensagens<span class="count" id="msg-count" hidden></span></button>
+    <button data-tab="customers"><svg class="ico"><use href="/assets/icons.svg#i-user"/></svg>Clientes</button>
+    <button data-tab="settings"><svg class="ico"><use href="/assets/icons.svg#i-gear"/></svg>Dados da loja</button>
+    <div class="bottom">
+      <a class="side-link" href="/" target="_blank"><svg class="ico"><use href="/assets/icons.svg#i-right"/></svg>Ver site</a>
+      <button id="logout"><svg class="ico"><use href="/assets/icons.svg#i-logout"/></svg>Sair</button>
+    </div>
+  </aside>
+
+  <main class="adm-main">
+    <div class="adm-top">
+      <div style="display:flex;gap:12px;align-items:center">
+        <button class="round-btn adm-burger" id="adm-burger" aria-label="Menu"><svg class="ico"><use href="/assets/icons.svg#i-right"/></svg></button>
+        <h1 id="page-title">Painel</h1>
+      </div>
+      <button class="btn btn-red" id="new-vehicle">+ Novo veículo</button>
+    </div>
+
+    <div id="pw-banner" class="banner" hidden>
+      <span>⚠️ Você está usando a senha inicial. Troque-a em <b>Dados da loja → Senha</b> para proteger o painel.</span>
+      <button class="btn btn-sm btn-ghost" data-goto="settings">Trocar agora</button>
+    </div>
+
+    <!-- Dashboard -->
+    <section data-view="dash">
+      <div class="kpis" id="kpis"></div>
+      <div class="split">
+        <div class="card"><h3>Últimas mensagens</h3><div id="dash-msgs"></div></div>
+        <div class="card"><h3>Dicas de fotos</h3>
+          <ul style="color:var(--muted);padding-left:18px;margin:0;display:grid;gap:8px">
+            <li>Fotografe o carro de lado/frente 3/4, com o veículo inteiro no quadro.</li>
+            <li>Marque <b>Remover fundo</b> no envio: a IA recorta o carro e o site aplica o fundo da Mussato automaticamente.</li>
+            <li>A primeira foto é a capa. Use as setas para reordenar.</li>
+            <li>Fotos internas (painel, bancos) envie <b>sem</b> remover o fundo.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Veículos -->
+    <section data-view="vehicles" hidden>
+      <div class="toolbar">
+        <input class="field" id="v-search" placeholder="Buscar no estoque...">
+        <select class="field" id="v-status" style="max-width:200px">
+          <option value="">Todos os status</option><option value="disponivel">Disponível</option><option value="reservado">Reservado</option><option value="vendido">Vendido</option><option value="oculto">Oculto</option>
+        </select>
+      </div>
+      <div class="vlist" id="vlist"></div>
+    </section>
+
+    <!-- Mensagens -->
+    <section data-view="messages" hidden>
+      <div class="toolbar">
+        <select class="field" id="m-type" style="max-width:220px">
+          <option value="">Todos os tipos</option><option value="interesse">Interesse em veículo</option><option value="duvida">Dúvidas</option><option value="venda">Quer vender/trocar</option><option value="financiamento">Financiamento</option><option value="contato">Contato</option>
+        </select>
+        <select class="field" id="m-status" style="max-width:200px">
+          <option value="">Todos os status</option><option value="aberta">Abertas</option><option value="em atendimento">Em atendimento</option><option value="respondida">Respondidas</option>
+        </select>
+      </div>
+      <div id="mlist"></div>
+    </section>
+
+    <!-- Clientes -->
+    <section data-view="customers" hidden>
+      <div class="toolbar"><input class="field" id="c-search" placeholder="Buscar cliente..."><button class="btn btn-ghost btn-sm" id="c-export">Exportar CSV</button></div>
+      <div class="table-wrap"><table class="table"><thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Cidade</th><th>Favoritos</th><th>Cadastro</th><th></th></tr></thead><tbody id="clist"></tbody></table></div>
+    </section>
+
+    <!-- Configurações -->
+    <section data-view="settings" hidden>
+      <div class="split" style="align-items:start">
+        <form class="card stack" id="settings-form">
+          <h3>Dados da loja</h3>
+          <div><label class="lbl">Nome da loja</label><input class="field" name="storeName"></div>
+          <div class="form-grid">
+            <div><label class="lbl">Telefone</label><input class="field" name="phone"></div>
+            <div><label class="lbl">WhatsApp (com DDI e DDD, só números)</label><input class="field" name="whatsapp" placeholder="554432880611"></div>
+            <div><label class="lbl">E-mail</label><input class="field" name="email" type="email"></div>
+            <div><label class="lbl">Instagram (sem @)</label><input class="field" name="instagram"></div>
+          </div>
+          <div><label class="lbl">Endereço (rua, número, bairro)</label><input class="field" name="address"></div>
+          <div class="form-grid">
+            <div><label class="lbl">Cidade / UF</label><input class="field" name="city"></div>
+            <div><label class="lbl">Busca do mapa (opcional)</label><input class="field" name="mapQuery" placeholder="Ex: Mussato Veículos, Cidade PR"></div>
+          </div>
+          <div><label class="lbl">Horário de funcionamento</label><input class="field" name="hours"></div>
+          <div><label class="lbl">Vendedores (um por linha — Nome: telefone)</label><textarea class="field" name="sellersText" style="min-height:90px" placeholder="Kelvin: (44) 98422-7968"></textarea></div>
+          <div><label class="lbl">Taxa de referência do simulador (% ao mês)</label><input class="field" name="financeRate" inputmode="decimal"></div>
+          <h3 style="margin-top:10px">Perguntas frequentes</h3>
+          <div class="faq-edit" id="faq-edit"></div>
+          <button type="button" class="btn btn-ghost btn-sm" id="faq-add">+ Adicionar pergunta</button>
+          <button class="btn btn-red" type="submit">Salvar dados da loja</button>
+        </form>
+        <form class="card stack" id="pw-form">
+          <h3>Senha do painel</h3>
+          <div><label class="lbl">Senha atual</label><input class="field" type="password" name="current" required autocomplete="current-password"></div>
+          <div><label class="lbl">Nova senha (mín. 8 caracteres)</label><input class="field" type="password" name="next" required minlength="8" autocomplete="new-password"></div>
+          <button class="btn btn-red" type="submit">Alterar senha</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Editor de veículo -->
+<div class="modal" id="editor" role="dialog" aria-modal="true" aria-labelledby="ed-title">
+  <div class="modal-box editor">
+    <button class="round-btn modal-close" data-close aria-label="Fechar"><svg class="ico"><use href="/assets/icons.svg#i-x"/></svg></button>
+    <h2 id="ed-title">Novo veículo</h2>
+    <form id="vform" class="stack">
+      <div class="form-3">
+        <div><label class="lbl">Marca *</label><input class="field" name="brand" required list="dl-brands"></div>
+        <div><label class="lbl">Modelo *</label><input class="field" name="model" required></div>
+        <div><label class="lbl">Versão</label><input class="field" name="version" placeholder="1.0 Turbo LT"></div>
+        <div><label class="lbl">Ano (fab/mod)</label><input class="field" name="year" placeholder="2022/2023"></div>
+        <div><label class="lbl">Quilometragem</label><input class="field" name="km" inputmode="numeric"></div>
+        <div><label class="lbl">Preço (R$)</label><input class="field" name="price" inputmode="numeric"></div>
+        <div><label class="lbl">Categoria</label><select class="field" name="category"><option>Hatch</option><option>Sedan</option><option>SUV</option><option>Picape</option><option>Utilitário</option><option>Moto</option></select></div>
+        <div><label class="lbl">Câmbio</label><select class="field" name="transmission"><option>Manual</option><option>Automático</option><option>CVT</option><option>Automatizado</option></select></div>
+        <div><label class="lbl">Combustível</label><select class="field" name="fuel"><option>Flex</option><option>Gasolina</option><option>Diesel</option><option>Híbrido</option><option>Elétrico</option></select></div>
+        <div><label class="lbl">Cor</label><input class="field" name="color"></div>
+        <div><label class="lbl">Portas</label><input class="field" name="doors" inputmode="numeric"></div>
+        <div><label class="lbl">Status</label><select class="field" name="status"><option value="disponivel">Disponível</option><option value="reservado">Reservado</option><option value="vendido">Vendido</option><option value="oculto">Oculto (não aparece no site)</option></select></div>
+        <div class="full"><label class="lbl">Opcionais (separe por vírgula)</label><textarea class="field" name="features" style="min-height:70px" placeholder="Ar-condicionado, Direção elétrica, Multimídia..."></textarea></div>
+        <div class="full"><label class="lbl">Descrição</label><textarea class="field" name="description" style="min-height:90px"></textarea></div>
+      </div>
+      <div class="check-row"><label><input type="checkbox" name="featured"> Destaque na página inicial</label></div>
+
+      <div>
+        <label class="lbl">Fotos</label>
+        <div class="drop" id="drop" tabindex="0" role="button" aria-label="Enviar fotos">
+          <svg class="ico" style="width:34px;height:34px;color:var(--red-2)"><use href="/assets/icons.svg#i-upload"/></svg>
+          <div><b>Clique ou arraste as fotos aqui</b><br><small style="color:var(--muted)">JPG, PNG ou WEBP — pode enviar várias de uma vez</small></div>
+          <div class="drop-opts" onclick="event.stopPropagation()">
+            <label><input type="checkbox" id="opt-bg" checked> Remover fundo (IA)</label>
+            <label><input type="checkbox" id="opt-enh" checked> Tratar imagem (brilho, contraste e cor)</label>
+          </div>
+        </div>
+        <input type="file" id="file" accept="image/*" multiple hidden>
+        <div class="photos" id="photos"></div>
+      </div>
+      <datalist id="dl-brands"><option>Chevrolet</option><option>Fiat</option><option>Volkswagen</option><option>Hyundai</option><option>Toyota</option><option>Honda</option><option>Renault</option><option>Jeep</option><option>Ford</option><option>Nissan</option><option>Peugeot</option><option>Citroën</option><option>Mitsubishi</option><option>Kia</option><option>BMW</option><option>Mercedes-Benz</option><option>Audi</option><option>Caoa Chery</option><option>BYD</option></datalist>
+      <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap">
+        <button type="button" class="btn btn-ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn btn-red" id="vsave">Salvar veículo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script type="module" src="/js/admin.js"></script>
+</body>
+</html>

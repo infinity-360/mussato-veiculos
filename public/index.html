@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mussato Veículos — Compra, Venda, Troca e Financiamento</title>
+  <meta name="description" content="Mussato Veículos: seminovos vistoriados, estoque próprio, preço justo e financiamento facilitado. Compra, venda, troca e financia. (44) 3288-0611.">
+  <meta name="theme-color" content="#07101f">
+  <meta property="og:title" content="Mussato Veículos">
+  <meta property="og:description" content="As melhores vantagens você encontra aqui. Compra • Venda • Troca • Financia.">
+  <meta property="og:image" content="/assets/loja.webp">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23e3141c'/%3E%3Ctext x='32' y='43' font-family='Arial Black' font-size='30' font-style='italic' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700&family=Kaushan+Script&family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- ============ INTRO: logo com carros passando ============ -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-road"></div>
+  <div id="intro-cars"></div>
+  <div class="intro-center">
+    <div class="logo"><span class="logo-main">MUSSATO</span><span class="logo-sub">Veículos</span></div>
+    <div class="intro-tag">Compra <b>•</b> Venda <b>•</b> Troca <b>•</b> Financia</div>
+    <div class="intro-shine"></div>
+  </div>
+  <button class="intro-skip" type="button" id="intro-skip">Pular intro ›</button>
+</div>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="#inicio" class="logo" aria-label="Mussato Veículos — início"><span class="logo-main">MUSSATO</span><span class="logo-sub">Veículos</span></a>
+    <nav class="nav-links" id="nav-links" aria-label="Menu principal">
+      <a href="#estoque">Estoque</a>
+      <a href="#marcas">Marcas</a>
+      <a href="#vantagens">Vantagens</a>
+      <a href="#financiamento">Financiamento</a>
+      <a href="#venda">Venda seu carro</a>
+      <a href="#duvidas">Dúvidas</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="/cliente" id="client-link"><svg class="ico"><use href="/assets/icons.svg#i-user"/></svg><span>Área do cliente</span></a>
+      <a class="btn btn-wa btn-sm" data-wa href="#" target="_blank" rel="noopener"><svg class="ico"><use href="/assets/icons.svg#i-wa"/></svg><span>WhatsApp</span></a>
+    </div>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1><span class="r">As</span> melhores <span class="r">vantagens</span><br><span class="r">você encontra aqui</span></h1>
+        <div class="hero-pills">
+          <span class="pill">Atendimento especializado</span>
+          <span class="pill">Preço justo</span>
+          <span class="pill">Estoque próprio</span>
+          <span class="pill">Veículos vistoriados</span>
+        </div>
+        <form class="search-box" id="hero-search">
+          <h3><svg class="ico" style="color:var(--red-2)"><use href="/assets/icons.svg#i-search"/></svg> Encontre seu próximo carro</h3>
+          <div class="search-row">
+            <select name="brand" id="hs-brand" aria-label="Marca"><option value="">Todas as marcas</option></select>
+            <input name="q" placeholder="Modelo (ex: Onix)" aria-label="Modelo">
+            <select name="max" aria-label="Preço até">
+              <option value="">Qualquer preço</option>
+              <option value="50000">Até R$ 50 mil</option>
+              <option value="70000">Até R$ 70 mil</option>
+              <option value="90000">Até R$ 90 mil</option>
+              <option value="120000">Até R$ 120 mil</option>
+              <option value="200000">Até R$ 200 mil</option>
+            </select>
+            <button class="btn btn-red" type="submit">Buscar</button>
+          </div>
+        </form>
+      </div>
+      <div class="showcase" aria-live="polite">
+        <div class="showcase-stage"><div class="showcase-car" id="sc-car"></div></div>
+        <div class="showcase-info">
+          <div><small>Destaque da semana</small><h3 id="sc-title">—</h3><small id="sc-sub"></small></div>
+          <div style="display:grid;gap:10px;justify-items:end">
+            <div class="showcase-price" id="sc-price"></div>
+            <div class="showcase-nav">
+              <button class="round-btn" id="sc-prev" aria-label="Anterior"><svg class="ico"><use href="/assets/icons.svg#i-left"/></svg></button>
+              <button class="round-btn" id="sc-open" aria-label="Ver detalhes"><svg class="ico"><use href="/assets/icons.svg#i-search"/></svg></button>
+              <button class="round-btn" id="sc-next" aria-label="Próximo"><svg class="ico"><use href="/assets/icons.svg#i-right"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="services-strip"><div class="container"><span>Compra</span><span>Venda</span><span>Troca</span><span>Financia</span></div></div>
+
+  <!-- ============ MARCAS ============ -->
+  <section class="section" id="marcas">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><div class="kicker">Pesquise por marca</div><h2 class="section-title">Escolha a <span class="r">sua marca</span></h2></div>
+        <p class="lead">Clique em uma marca para ver na hora todos os veículos dela disponíveis no nosso estoque.</p>
+      </div>
+      <div class="brands reveal" id="brands"></div>
+    </div>
+  </section>
+
+  <!-- ============ ESTOQUE ============ -->
+  <section class="section alt" id="estoque">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><div class="kicker">Estoque próprio</div><h2 class="section-title">Nossos <span class="r">veículos</span></h2></div>
+      </div>
+      <form class="filters" id="filters" onsubmit="return false">
+        <input class="field" name="q" placeholder="Buscar marca, modelo, versão..." aria-label="Buscar">
+        <select class="field" name="brand" aria-label="Marca"><option value="">Marca</option></select>
+        <select class="field" name="category" aria-label="Categoria"><option value="">Categoria</option></select>
+        <select class="field" name="transmission" aria-label="Câmbio"><option value="">Câmbio</option><option>Manual</option><option>Automático</option></select>
+        <select class="field" name="max" aria-label="Preço máximo">
+          <option value="">Preço até</option><option value="50000">R$ 50 mil</option><option value="70000">R$ 70 mil</option><option value="90000">R$ 90 mil</option><option value="120000">R$ 120 mil</option><option value="200000">R$ 200 mil</option>
+        </select>
+        <select class="field" name="sort" aria-label="Ordenar">
+          <option value="new">Mais recentes</option><option value="low">Menor preço</option><option value="high">Maior preço</option><option value="km">Menor km</option><option value="year">Mais novos</option>
+        </select>
+      </form>
+      <div class="result-bar"><span id="result-count"></span><div class="chips" id="chips"></div></div>
+      <div class="grid-cars" id="grid"></div>
+    </div>
+  </section>
+
+  <!-- ============ VANTAGENS ============ -->
+  <section class="section" id="vantagens">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><div class="kicker">Por que a Mussato</div><h2 class="section-title">Vantagens que <span class="r">fazem a diferença</span></h2></div>
+      </div>
+      <div class="adv-grid">
+        <div class="adv reveal"><div class="adv-ico"><svg class="ico"><use href="/assets/icons.svg#i-user"/></svg></div><h3>Atendimento especializado</h3><p>Equipe que entende de carro e te ajuda a escolher o veículo certo para o seu bolso.</p></div>
+        <div class="adv reveal"><div class="adv-ico"><svg class="ico"><use href="/assets/icons.svg#i-tag"/></svg></div><h3>Preço justo</h3><p>Valores transparentes, de acordo com o mercado, e as melhores condições de pagamento.</p></div>
+        <div class="adv reveal"><div class="adv-ico"><svg class="ico"><use href="/assets/icons.svg#i-car"/></svg></div><h3>Estoque próprio</h3><p>Todos os carros estão na loja, prontos para você ver, avaliar e fazer test-drive.</p></div>
+        <div class="adv reveal"><div class="adv-ico"><svg class="ico"><use href="/assets/icons.svg#i-shield"/></svg></div><h3>Veículos vistoriados</h3><p>Vistoria cautelar e revisão em todos os veículos. Mais segurança na sua compra.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINANCIAMENTO / VENDA ============ -->
+  <section class="section alt" id="financiamento">
+    <div class="container split">
+      <div class="card reveal">
+        <div class="kicker">Simulador</div>
+        <h3>Simule seu financiamento</h3>
+        <div class="stack">
+          <div><label class="lbl" for="sim-price">Valor do veículo</label><input class="field" id="sim-price" inputmode="numeric" value="80.000"></div>
+          <div>
+            <div class="range-row"><label class="lbl" for="sim-down">Entrada</label><span id="sim-down-l"></span></div>
+            <input type="range" id="sim-down" min="0" max="90" value="30" step="5">
+          </div>
+          <div>
+            <div class="range-row"><label class="lbl" for="sim-n">Parcelas</label><span id="sim-n-l"></span></div>
+            <input type="range" id="sim-n" min="12" max="60" value="48" step="12">
+          </div>
+        </div>
+        <div class="sim-result">
+          <div>Entrada<strong id="r-down"></strong></div>
+          <div>Financiado<strong id="r-fin"></strong></div>
+          <div>Parcelas<strong id="r-n"></strong></div>
+          <div>Valor aprox.<strong id="r-pmt"></strong></div>
+        </div>
+        <p class="fine" id="sim-fine"></p>
+        <button class="btn btn-red btn-block" id="sim-send" type="button" style="margin-top:8px">Quero essa condição</button>
+      </div>
+
+      <div class="card reveal" id="venda">
+        <div class="kicker">Compramos seu carro</div>
+        <h3>Venda ou troque seu veículo</h3>
+        <p class="lead" style="margin-top:-6px">Avaliação justa e pagamento rápido. Use seu carro como entrada no próximo!</p>
+        <form class="form-grid" data-msg="venda">
+          <input class="field" name="name" placeholder="Seu nome" required autocomplete="name">
+          <input class="field" name="phone" placeholder="WhatsApp" required autocomplete="tel" inputmode="tel">
+          <input class="field" name="car" placeholder="Marca / modelo" required>
+          <input class="field" name="yearkm" placeholder="Ano e km">
+          <textarea class="field full" name="message" placeholder="Conte mais sobre o veículo (estado, opcionais, se quer trocar...)"></textarea>
+          <button class="btn btn-red full" type="submit">Quero uma avaliação</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE ============ -->
+  <section class="section" id="sobre">
+    <div class="container about">
+      <div class="about-photo reveal"><img src="/assets/loja.webp" alt="Fachada da loja Mussato Veículos com carros em exposição" loading="lazy"></div>
+      <div class="reveal">
+        <div class="kicker">Nossa loja</div>
+        <h2 class="section-title">Mussato <span class="r">Veículos</span></h2>
+        <p class="lead">Uma loja feita para quem quer comprar, vender, trocar ou financiar com segurança. Showroom com estoque próprio, todos os veículos vistoriados e uma equipe pronta para encontrar a melhor condição para você.</p>
+        <div class="about-stats">
+          <div class="stat"><strong id="st-stock">0</strong><span>carros no estoque</span></div>
+          <div class="stat"><strong id="st-brands">0</strong><span>marcas</span></div>
+          <div class="stat"><strong>100%</strong><span>vistoriados</span></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px">
+          <a class="btn btn-red" href="#estoque">Ver estoque</a>
+          <a class="btn btn-ghost" data-ig href="#" target="_blank" rel="noopener"><svg class="ico"><use href="/assets/icons.svg#i-ig"/></svg>Instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DÚVIDAS ============ -->
+  <section class="section alt" id="duvidas">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><div class="kicker">Tire suas dúvidas</div><h2 class="section-title">Perguntas <span class="r">frequentes</span></h2></div>
+      </div>
+      <div class="faq-wrap">
+        <div id="faq" class="reveal"></div>
+        <div class="card reveal">
+          <h3>Ainda tem dúvidas?</h3>
+          <p class="lead" style="margin-top:-6px;font-size:.95rem">Envie sua pergunta. Respondemos rapidinho por WhatsApp ou e-mail — e, se tiver cadastro, a resposta aparece na sua <a href="/cliente">área do cliente</a>.</p>
+          <form class="stack" data-msg="duvida">
+            <input class="field" name="name" placeholder="Seu nome" required autocomplete="name">
+            <input class="field" name="phone" placeholder="WhatsApp" autocomplete="tel" inputmode="tel">
+            <input class="field" name="email" type="email" placeholder="E-mail" autocomplete="email">
+            <textarea class="field" name="message" placeholder="Sua dúvida" required></textarea>
+            <button class="btn btn-red" type="submit">Enviar dúvida</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTATO ============ -->
+  <section class="section" id="contato">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><div class="kicker">Fale com a gente</div><h2 class="section-title">Contato e <span class="r">endereço</span></h2></div>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="info-list">
+            <a class="info" id="ct-phone" href="#"><div class="info-ico"><svg class="ico"><use href="/assets/icons.svg#i-phone"/></svg></div><div><small>Telefone</small><strong></strong></div></a>
+            <a class="info" data-wa href="#" target="_blank" rel="noopener"><div class="info-ico" style="background:#1fae54"><svg class="ico"><use href="/assets/icons.svg#i-wa"/></svg></div><div><small>WhatsApp</small><strong id="ct-wa"></strong></div></a>
+            <a class="info" data-ig href="#" target="_blank" rel="noopener"><div class="info-ico"><svg class="ico"><use href="/assets/icons.svg#i-ig"/></svg></div><div><small>Instagram</small><strong id="ct-ig"></strong></div></a>
+            <a class="info" id="ct-addr" href="#" target="_blank" rel="noopener"><div class="info-ico"><svg class="ico"><use href="/assets/icons.svg#i-pin"/></svg></div><div><small>Endereço</small><strong></strong></div></a>
+            <div class="info"><div class="info-ico"><svg class="ico"><use href="/assets/icons.svg#i-clock"/></svg></div><div><small>Horário</small><strong id="ct-hours"></strong></div></div>
+          </div>
+          <div id="ct-sellers" class="sellers"></div>
+          <div class="map" id="map"></div>
+        </div>
+        <div class="card reveal">
+          <h3>Envie uma mensagem</h3>
+          <form class="form-grid" data-msg="contato">
+            <input class="field" name="name" placeholder="Nome" required autocomplete="name">
+            <input class="field" name="phone" placeholder="WhatsApp" autocomplete="tel" inputmode="tel">
+            <input class="field full" name="email" type="email" placeholder="E-mail" autocomplete="email">
+            <textarea class="field full" name="message" placeholder="Como podemos ajudar?" required style="min-height:170px"></textarea>
+            <button class="btn btn-red full" type="submit">Enviar mensagem</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a href="#inicio" class="logo"><span class="logo-main">MUSSATO</span><span class="logo-sub">Veículos</span></a>
+      <p style="color:var(--muted);margin-top:16px;max-width:320px">Compra • Venda • Troca • Financia. Seminovos vistoriados com procedência e preço justo.</p>
+    </div>
+    <div><h4>Navegação</h4><ul><li><a href="#estoque">Estoque</a></li><li><a href="#marcas">Marcas</a></li><li><a href="#financiamento">Financiamento</a></li><li><a href="#venda">Venda seu carro</a></li></ul></div>
+    <div><h4>Atendimento</h4><ul><li><a href="#duvidas">Dúvidas</a></li><li><a href="#contato">Contato</a></li><li><a href="/cliente">Área do cliente</a></li><li><a href="/admin">Área do lojista</a></li></ul></div>
+    <div><h4>Contato</h4><ul><li id="ft-phone"></li><li id="ft-addr"></li><li id="ft-hours"></li></ul></div>
+  </div>
+  <div class="container copy"><span>© <span id="year"></span> Mussato Veículos. Todos os direitos reservados.</span><span>Imagens dos veículos meramente ilustrativas.</span></div>
+</footer>
+
+<a class="wa-float" data-wa href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg width="32" height="32" style="color:#fff"><use href="/assets/icons.svg#i-wa"/></svg></a>
+
+<!-- ============ MODAL DO VEÍCULO ============ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="md-title">
+  <div class="modal-box" id="modal-box"></div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/site.js"></script>
+</body>
+</html>
