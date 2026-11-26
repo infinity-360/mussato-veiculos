@@ -345,7 +345,52 @@
   $$('.reveal').forEach((el) => io.observe(el));
   $('#year').textContent = new Date().getFullYear();
 
+  /* ================= TOUR 360° ================= */
+  // Fotos em assets/360/tour.json ("olhar" = graus para onde a câmera vira ao abrir). Para fotos do interior, adicione itens lá.
+  function initTour() {
+    const box = $('#tour-viewer');
+    const tio = new IntersectionObserver(async ([en]) => {
+      if (!en.isIntersecting) return;
+      tio.disconnect();
+      try {
+        const [list, { Viewer, utils }] = await Promise.all([
+          fetch('assets/360/tour.json').then((r) => r.json()),
+          import('https://esm.sh/@photo-sphere-viewer/core@5.15.1'),
+        ]);
+        if (!document.createElement('canvas').getContext('webgl2')) { // aparelho sem 3D: mostra a foto panorâmica rolável
+          box.innerHTML = `<div class="tour-flat"><img src="${esc(list[0].foto)}" alt="Foto panorâmica da ${esc(list[0].nome)}"></div>`; return;
+        }
+        box.innerHTML = '';
+        const rad = (deg) => (deg || 0) * Math.PI / 180;
+        // Começa em "modo mundo" (planetinha visto de cima) e abre para a visão normal.
+        const viewer = new Viewer({
+          container: box, panorama: list[0].foto, caption: list[0].nome, navbar: ['zoom', 'caption', 'fullscreen'],
+          defaultPitch: -Math.PI / 2, defaultYaw: rad(list[0].olhar), defaultZoomLvl: 0, fisheye: 2, maxFov: 130, mousewheel: false,
+        });
+        viewer.addEventListener('ready', () => {
+          new utils.Animation({
+            properties: { pitch: { start: -Math.PI / 2, end: 0 }, zoom: { start: 0, end: 50 }, maxFov: { start: 130, end: 90 }, fisheye: { start: 2, end: 0 } },
+            duration: 2800, easing: 'inOutQuad',
+            onTick: (p) => { viewer.setOptions({ fisheye: p.fisheye, maxFov: p.maxFov }); viewer.rotate({ yaw: rad(list[0].olhar), pitch: p.pitch }); viewer.zoom(p.zoom); },
+          });
+        }, { once: true });
+        if (list.length > 1) {
+          $('#tour-tabs').innerHTML = list.map((t, i) => `<button class="btn btn-sm ${i ? 'btn-ghost' : 'btn-red'}" data-i="${i}">${esc(t.nome)}</button>`).join('');
+          $$('#tour-tabs button').forEach((b) => b.addEventListener('click', () => {
+            const t = list[b.dataset.i];
+            $$('#tour-tabs button').forEach((x) => x.className = 'btn btn-sm ' + (x === b ? 'btn-red' : 'btn-ghost'));
+            viewer.setPanorama(t.foto, { caption: t.nome, position: { yaw: rad(t.olhar), pitch: 0 } });
+          }));
+        }
+      } catch {
+        box.innerHTML = '<span class="tour-loading">Não foi possível carregar a visita 360°.</span>';
+      }
+    }, { rootMargin: '0px 0px -30% 0px' });
+    tio.observe(box);
+  }
+
   /* ================= INICIALIZAÇÃO ================= */
+  initTour();
   runIntro();
   (async () => {
     try {
