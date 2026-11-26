@@ -1,45 +1,11 @@
 /* Mussato Veículos — site público */
 (() => {
-  const { $, $$, esc, brl, km, api, carSVG, vehicleVisual, vTitle, priceLabel, waLink, installment, toast, formData, store, TOKEN_KEY } = M;
+  const { $, $$, esc, brl, km, api, vehicleVisual, vTitle, priceLabel, waLink, installment, toast, formData, store, TOKEN_KEY } = M;
   const kmLabel = (v) => (v.km > 0 ? km(v.km) : v.category === 'Moto' ? 'Moto' : 'Km: consulte');
   let settings = {};
   let vehicles = [];
   let me = null;
   const state = { q: '', brand: '', category: '', transmission: '', max: '', sort: 'new' };
-
-  /* ================= INTRO ================= */
-  function runIntro() {
-    const intro = $('#intro');
-    const seen = (() => { try { return sessionStorage.getItem('mussato_intro'); } catch { return null; } })();
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (seen) { intro.remove(); return; }
-    document.body.style.overflow = 'hidden';
-    const lanes = [
-      { top: 60, w: 170, dur: 1.9, delay: 0.0, color: 'Branco', cat: 'Sedan', op: .55, blur: 1.5 },
-      { top: 62, w: 200, dur: 1.7, delay: 1.0, color: 'Prata', cat: 'SUV', op: .6, blur: 1.2 },
-      { top: 66, w: 280, dur: 1.4, delay: 0.35, color: 'Vermelho', cat: 'Hatch', op: .85, blur: .6 },
-      { top: 67, w: 300, dur: 1.3, delay: 1.45, color: 'Azul', cat: 'Hatch', op: .85, blur: .6 },
-      { top: 74, w: 440, dur: 1.15, delay: 0.7, color: 'Branco', cat: 'Sedan', op: 1, blur: 0 },
-      { top: 76, w: 470, dur: 1.05, delay: 1.9, color: 'Preto', cat: 'SUV', op: 1, blur: 0 },
-    ];
-    if (!reduce) {
-      $('#intro-cars').innerHTML = lanes.map((l) => `
-        <div class="intro-car" style="top:${l.top}%;width:${l.w}px;opacity:${l.op};filter:blur(${l.blur}px);animation-duration:${l.dur}s;animation-delay:${l.delay}s;z-index:${Math.round(l.w / 100)}">
-          ${carSVG({ category: l.cat, color: l.color })}
-        </div>`).join('');
-    }
-    let done = false;
-    const close = () => {
-      if (done) return; done = true;
-      intro.classList.add('hide');
-      document.body.style.overflow = '';
-      try { sessionStorage.setItem('mussato_intro', '1'); } catch {}
-      setTimeout(() => intro.remove(), 1000);
-    };
-    $('#intro-skip').addEventListener('click', close);
-    intro.addEventListener('click', close);
-    setTimeout(close, reduce ? 1400 : 3700);
-  }
 
   /* ================= CONFIGURAÇÕES / CONTATO ================= */
   function applySettings() {
@@ -375,7 +341,6 @@
 
   /* ================= INICIALIZAÇÃO ================= */
   initTour();
-  runIntro();
   (async () => {
     try {
       [settings, vehicles] = await Promise.all([api('/api/settings'), api('/api/vehicles')]);
