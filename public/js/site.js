@@ -353,33 +353,17 @@
       if (!en.isIntersecting) return;
       tio.disconnect();
       try {
-        const [list, { Viewer, utils }] = await Promise.all([
-          fetch('assets/360/tour.json').then((r) => r.json()),
-          import('https://esm.sh/@photo-sphere-viewer/core@5.15.1'),
-        ]);
-        if (!document.createElement('canvas').getContext('webgl2')) { // aparelho sem 3D: mostra a foto panorâmica rolável
-          box.innerHTML = `<div class="tour-flat"><img src="${esc(list[0].foto)}" alt="Foto panorâmica da ${esc(list[0].nome)}"></div>`; return;
-        }
+        const list = await fetch('assets/360/tour.json').then((r) => r.json());
         box.innerHTML = '';
-        const rad = (deg) => (deg || 0) * Math.PI / 180;
-        // Começa em "modo mundo" (planetinha visto de cima) e abre para a visão normal.
-        const viewer = new Viewer({
-          container: box, panorama: list[0].foto, caption: list[0].nome, navbar: ['zoom', 'caption', 'fullscreen'],
-          defaultPitch: -Math.PI / 2, defaultYaw: rad(list[0].olhar), defaultZoomLvl: 0, fisheye: 2, maxFov: 130, mousewheel: false,
-        });
-        viewer.addEventListener('ready', () => {
-          new utils.Animation({
-            properties: { pitch: { start: -Math.PI / 2, end: 0 }, zoom: { start: 0, end: 50 }, maxFov: { start: 130, end: 90 }, fisheye: { start: 2, end: 0 } },
-            duration: 2800, easing: 'inOutQuad',
-            onTick: (p) => { viewer.setOptions({ fisheye: p.fisheye, maxFov: p.maxFov }); viewer.rotate({ yaw: rad(list[0].olhar), pitch: p.pitch }); viewer.zoom(p.zoom); },
-          });
-        }, { once: true });
+        const pano = window.Pano(box);
+        await pano.setImage(list[0].foto);
+        pano.intro(list[0].olhar); // começa em "modo mundo" (planetinha) e abre para a visão normal
         if (list.length > 1) {
           $('#tour-tabs').innerHTML = list.map((t, i) => `<button class="btn btn-sm ${i ? 'btn-ghost' : 'btn-red'}" data-i="${i}">${esc(t.nome)}</button>`).join('');
-          $$('#tour-tabs button').forEach((b) => b.addEventListener('click', () => {
+          $$('#tour-tabs button').forEach((b) => b.addEventListener('click', async () => {
             const t = list[b.dataset.i];
             $$('#tour-tabs button').forEach((x) => x.className = 'btn btn-sm ' + (x === b ? 'btn-red' : 'btn-ghost'));
-            viewer.setPanorama(t.foto, { caption: t.nome, position: { yaw: rad(t.olhar), pitch: 0 } });
+            await pano.setImage(t.foto); pano.look(t.olhar);
           }));
         }
       } catch {

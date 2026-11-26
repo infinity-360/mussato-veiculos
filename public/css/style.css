@@ -484,4 +484,9 @@ select option { background: #fff; color: var(--text); }
 .tour-tabs:empty { display: none; }
 .tour-viewer { position: relative; height: clamp(320px, 62vh, 620px); border-radius: var(--radius); overflow: hidden; background: #e9ecf0; box-shadow: var(--shadow); display: grid; place-items: center; }
 .tour-loading { color: var(--muted); }
-.tour-flat { width: 100%; height: 100%; overflow-x: auto; } .tour-flat img { height: 100%; width: auto; max-width: none; }
+.tour-viewer canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+.tour-viewer canvas:active { cursor: grabbing; }
+.tour-viewer:fullscreen { border-radius: 0; height: 100%; }
+.pano-ui { position: absolute; right: 12px; bottom: 12px; display: flex; gap: 6px; z-index: 2; }
+.pano-ui button { width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .92); color: var(--text); font-size: 1.3rem; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 23, 42, .2); }
+.pano-ui button:hover { background: var(--red); color: #fff; }
